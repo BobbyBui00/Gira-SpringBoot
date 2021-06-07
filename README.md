@@ -1,7 +1,1 @@
-<<<<<<< HEAD
-# Gira-SpringBoot
-Build Gira with Spring boot
-=======
-# gira
- Gira Project for Education Purpose
->>>>>>> 71e7186 (role and roleGroup demo)
+Buid Gira (Jira alike) project with Spring Boot 
