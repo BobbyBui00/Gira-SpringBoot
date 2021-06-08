@@ -13,7 +13,7 @@ import cybersoft.javabackend.java11.gira.role.model.RoleGroup;
 import cybersoft.javabackend.java11.gira.role.repository.RoleGroupRepository;
 
 @Service
-public class RoleGroupServiceImpl implements RoleGroupService{
+public class RoleGroupServiceImpl implements RoleGroupService {
 	@Autowired
 	private RoleGroupRepository repository;
 	

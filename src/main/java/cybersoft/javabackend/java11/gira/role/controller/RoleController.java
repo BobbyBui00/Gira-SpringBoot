@@ -85,9 +85,9 @@ public class RoleController {
 		Role role = new Role()
 				.roleName(dto.roleName)
 				.description(dto.description);	
-		
-		_service.save(role);
-		return new ResponseEntity<>(HttpStatus.CREATED);
+		Role addRole = _service.save(role);
+		System.out.println(addRole.toString());
+		return new ResponseEntity<>(addRole, HttpStatus.CREATED);
 	}
 	
 	
