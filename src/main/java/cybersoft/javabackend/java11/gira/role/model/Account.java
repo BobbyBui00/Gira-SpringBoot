@@ -8,17 +8,27 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+
+import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import cybersoft.javabackend.java11.gira.commondata.AbstractEntity;
+
 @Entity
 @Table(name = "account")
-public class Account {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+public class Account extends AbstractEntity {
+
+	@NotBlank(message = "username can't be blank.")
+	@Length(min = 4, max = 50, message = "username length must between 4 to 50")
 	private String username;
+	
+	@NotBlank(message = "password can't be blank.")
+	@Length(min = 4, max = 50, message = "username length must between 4 to 50")
 	private String password;
+	
+	@NotBlank(message = "email can't be blank.")
 	private String email;
 	
 	@Column(name = "role_id", insertable = false, updatable = false)

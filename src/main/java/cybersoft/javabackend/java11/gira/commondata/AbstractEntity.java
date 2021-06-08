@@ -27,12 +27,12 @@ public class AbstractEntity {
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateUtils.DATE_FORMAT)
 	@DateTimeFormat(pattern = DateUtils.DATE_FORMAT)
-	@Column(name="created_at", nullable = false, updatable = false)
+	@Column(name = "created_at", nullable = false, updatable = false)
 	protected LocalDateTime createdAt;
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateUtils.DATE_FORMAT)
 	@DateTimeFormat(pattern = DateUtils.DATE_FORMAT)
-	@Column(name="updated_at", nullable = false)
+	@Column(name = "updated_at", nullable = false)
 	protected LocalDateTime updatedAt;
 	
 	public AbstractEntity() {

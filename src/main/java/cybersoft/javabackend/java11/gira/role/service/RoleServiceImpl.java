@@ -2,23 +2,23 @@ package cybersoft.javabackend.java11.gira.role.service;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cybersoft.javabackend.java11.gira.role.dto.RoleWithAccountsDTO;
+import cybersoft.javabackend.java11.gira.role.model.Account;
 import cybersoft.javabackend.java11.gira.role.model.Role;
+import cybersoft.javabackend.java11.gira.role.model.RoleGroup;
 import cybersoft.javabackend.java11.gira.role.repository.RoleRepository;
 
 @Service
 public class RoleServiceImpl implements RoleService {
 	@Autowired
 	private RoleRepository _repository;
-	
-	@Override
-	public void save(Role role) {
-		_repository.save(role);
-	}
 	
 	@Override
 	public List<Role> findAll() {	
@@ -73,6 +73,40 @@ public class RoleServiceImpl implements RoleService {
 		dto.setAccounts(role.getAccounts());
 		
 	}
+
+	@Override
+	public Optional<Role> findById(Long id) {
+		// TODO Auto-generated method stub
+		return _repository.findById(id);
+	}
+
+	@Override
+	public Role save(Role entity) {
+		return _repository.save(entity);
+	}
+
+	@Override
+	public Role update(Role entity) {
+		// TODO Auto-generated method stub
+		return _repository.save(entity);
+	}
+
+	@Override
+	public void deleteById(Long id) {
+		// TODO Auto-generated method stub
+		_repository.deleteById(id);
+	}
+
+	@Override
+	public Role addAccount(@Valid Account account, Long roleId) {
+		// TODO Auto-generated method stub
+		Role accountGroup = _repository.getOne(roleId);
+		
+		accountGroup.addAccount(account);
+		
+		return _repository.save(accountGroup);
+	}
+
 
 
 }

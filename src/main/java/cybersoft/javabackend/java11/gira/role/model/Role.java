@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 
 import org.hibernate.validator.constraints.Length;
@@ -28,12 +29,16 @@ public class Role extends AbstractEntity {
 	private String description;
 	
 	@OneToMany(mappedBy = "role", fetch = FetchType.LAZY)
-	@JsonIgnore
 	Set<Account> accounts;
 	
 	@ManyToMany(mappedBy = "roles")
 	@JsonIgnore
 	private Set<RoleGroup> groups = new HashSet<>();
+	
+	public Role addAccount(Account account) {
+		this.accounts.add(account);
+		return this;
+	}
 	
 	public Role roleName(String roleName) {
 		this.roleName = roleName;
@@ -80,7 +85,7 @@ public class Role extends AbstractEntity {
 	public Set<Account> getAccounts() {
 		return accounts;
 	}
-	
+
 	public void setAccounts(Set<Account> accounts) {
 		this.accounts = accounts;
 	}
@@ -88,6 +93,6 @@ public class Role extends AbstractEntity {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return String.format("ROLE: %d %s %s", id, roleName, description);
+		return String.format("ROLE: " + id + " " + roleName + " " + description + " " + accounts);
 	}
 }
