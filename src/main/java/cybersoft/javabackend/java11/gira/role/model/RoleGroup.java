@@ -13,10 +13,10 @@ import javax.validation.constraints.NotBlank;
 
 import org.hibernate.validator.constraints.Length;
 
-import cybersoft.javabackend.java11.gira.commondata.AbstractEntity;
+import cybersoft.javabackend.java11.gira.commondata.model.AbstractEntity;
 
 @Entity
-@Table(name = "role_group")
+@Table(name = "gira_role_group")
 public class RoleGroup extends AbstractEntity {
 
 	@NotBlank(message = "Role name cannot be blank.")
