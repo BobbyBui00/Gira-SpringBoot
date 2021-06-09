@@ -46,6 +46,15 @@ public class RoleGroupServiceImpl implements RoleGroupService {
 	public RoleGroup addRole(@Valid Role role, Long groupId) {
 		RoleGroup group = repository.getOne(groupId);
 		
+		/*
+		 *  getOne() => lay tham chieu toi object
+		 *  
+		 *  findById() => sinh ra cau query lay tu database len 
+		 *  
+		 *  => lau hon
+  		 * 
+		 */
+		
 		group.addRole(role);
 		
 		return repository.save(group);

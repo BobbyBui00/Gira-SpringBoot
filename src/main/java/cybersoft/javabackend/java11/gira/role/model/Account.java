@@ -2,9 +2,6 @@ package cybersoft.javabackend.java11.gira.role.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -14,10 +11,10 @@ import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import cybersoft.javabackend.java11.gira.commondata.AbstractEntity;
+import cybersoft.javabackend.java11.gira.commondata.model.AbstractEntity;
 
 @Entity
-@Table(name = "account")
+@Table(name = "gira_account")
 public class Account extends AbstractEntity {
 
 	@NotBlank(message = "username can't be blank.")

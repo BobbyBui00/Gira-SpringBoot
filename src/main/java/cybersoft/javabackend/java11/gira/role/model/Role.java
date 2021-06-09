@@ -15,10 +15,10 @@ import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import cybersoft.javabackend.java11.gira.commondata.AbstractEntity;
+import cybersoft.javabackend.java11.gira.commondata.model.AbstractEntity;
 
 @Entity
-@Table(name = "role")
+@Table(name = "gira_role")
 public class Role extends AbstractEntity {
 	
 	@NotBlank(message = "Role name cannot be blank.")
@@ -35,6 +35,12 @@ public class Role extends AbstractEntity {
 	@JsonIgnore
 	private Set<RoleGroup> groups = new HashSet<>();
 	
+	public Role id(Long id) {
+		this.id = id;
+		return this;
+	}
+	
+	/* Helper Method */
 	public Role addAccount(Account account) {
 		this.accounts.add(account);
 		return this;
@@ -50,6 +56,7 @@ public class Role extends AbstractEntity {
 		return this;
 	}
 	
+	/* Getter - Setter */
 	public Set<RoleGroup> getGroups() {
 		return groups;
 	}

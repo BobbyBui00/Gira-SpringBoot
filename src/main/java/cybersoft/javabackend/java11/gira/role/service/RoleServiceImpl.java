@@ -9,10 +9,10 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cybersoft.javabackend.java11.gira.role.dto.CreateRoleDTO;
 import cybersoft.javabackend.java11.gira.role.dto.RoleWithAccountsDTO;
 import cybersoft.javabackend.java11.gira.role.model.Account;
 import cybersoft.javabackend.java11.gira.role.model.Role;
-import cybersoft.javabackend.java11.gira.role.model.RoleGroup;
 import cybersoft.javabackend.java11.gira.role.repository.RoleRepository;
 
 @Service
@@ -105,6 +105,16 @@ public class RoleServiceImpl implements RoleService {
 		accountGroup.addAccount(account);
 		
 		return _repository.save(accountGroup);
+	}
+
+	@Override
+	public Role updateRoleInfo(@Valid CreateRoleDTO dto, Long roleId) {
+		// TODO Auto-generated method stub
+		Role updatedRole = _repository.getOne(roleId);
+		updatedRole.roleName(dto.roleName)
+				   .description(dto.description);
+		
+		return _repository.save(updatedRole);
 	}
 
 
