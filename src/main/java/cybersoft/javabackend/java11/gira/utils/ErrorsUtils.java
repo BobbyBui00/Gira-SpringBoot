@@ -3,12 +3,15 @@ package cybersoft.javabackend.java11.gira.utils;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 
 public class ErrorsUtils {
 	
-	public static List<String> getErrorsMessage(List<ObjectError> errors) {
+	// Get all list of errors
+	public static List<String> getErrorsMessage(BindingResult bindingResult) {
 		List<String> messages = new LinkedList<>();
+		List<ObjectError> errors = bindingResult.getAllErrors();
 		
 		for(ObjectError error : errors) {
 			messages.add(error.getDefaultMessage());

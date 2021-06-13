@@ -117,6 +117,15 @@ public class RoleServiceImpl implements RoleService {
 		return _repository.save(updatedRole);
 	}
 
+	@Override
+	public Role save(CreateRoleDTO dto) {
+		// TODO Auto-generated method stub
+		Role role = new Role()
+				.roleName(dto.roleName)
+				.description(dto.description);
+		return role;
+	}
+
 
 
 }
