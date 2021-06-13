@@ -9,10 +9,12 @@ public class DateUtils {
 	
 	private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
 	
+	// Parsing from Json dateTime to string
 	public static String toString(LocalDateTime date) {
 		return date.format(formatter);
 	}
 	
+	// Parsing from string dateTime to Json dateTime
 	public static LocalDateTime toDate(String date) {
 		return LocalDateTime.parse(date, formatter);
 	}

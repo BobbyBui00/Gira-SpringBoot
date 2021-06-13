@@ -18,4 +18,5 @@ public interface RoleService extends GenericService<Role, Long> {
 	List<RoleWithAccountsDTO> findRoleWithAccountInfo();
 	Role addAccount(@Valid Account account, Long roleId);
 	Role updateRoleInfo(@Valid CreateRoleDTO dto, Long roleId);
+	Role save(CreateRoleDTO dto);
 }
