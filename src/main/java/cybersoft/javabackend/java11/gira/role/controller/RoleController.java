@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import cybersoft.javabackend.java11.gira.commondata.model.ResponseHandler;
 import cybersoft.javabackend.java11.gira.commondata.model.ResponseObject;
 import cybersoft.javabackend.java11.gira.role.dto.CreateRoleDTO;
 import cybersoft.javabackend.java11.gira.role.dto.RoleWithAccountsDTO;
@@ -37,9 +38,9 @@ public class RoleController {
 		List<Role> roles = _service.findAll();
 		
 		if(roles == null)
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-		System.out.println(roles.toString());
-		return new ResponseEntity<>(roles, HttpStatus.OK);
+			return ResponseHandler.getResponse("There is no data.", HttpStatus.OK);
+
+		return ResponseHandler.getResponse(roles, HttpStatus.OK);
 	}
 	
 	@GetMapping("/{role-name}")
@@ -47,9 +48,9 @@ public class RoleController {
 		List<Role> roles = _service.findByRoleName(roleName);
 		
 		if(roles.isEmpty())
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			return ResponseHandler.getResponse("There is no data.", HttpStatus.OK);
 		
-		return new ResponseEntity<>(roles, HttpStatus.OK);
+		return ResponseHandler.getResponse(roles, HttpStatus.OK);
 	}
 	
 	@GetMapping("/description/{role-name}")
@@ -57,19 +58,19 @@ public class RoleController {
 		List<Role> roles = _service.findRoleWithNotNullDescription(roleName);
 		
 		if(roles.isEmpty())
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			return ResponseHandler.getResponse("There is no data.", HttpStatus.OK);
 		
-		return new ResponseEntity<>(roles, HttpStatus.OK);
+		return ResponseHandler.getResponse(roles, HttpStatus.OK);
 	}
 	
 	@GetMapping("/with-account")
-	public ResponseEntity<List<RoleWithAccountsDTO>> findRoleWithAccountInfo() {
+	public ResponseEntity<Object> findRoleWithAccountInfo() {
 		List<RoleWithAccountsDTO> roles = _service.findRoleWithAccountInfo();
 		
 		if(roles.isEmpty())
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			return ResponseHandler.getResponse("There is no data.", HttpStatus.OK);
 		
-		return new ResponseEntity<>(roles, HttpStatus.OK);
+		return ResponseHandler.getResponse(roles, HttpStatus.OK);
 	}
 	
 	@GetMapping("/description")
@@ -77,43 +78,41 @@ public class RoleController {
 		List<Role> roles = _service.findByDescription(description);
 		
 		if(roles.isEmpty())
-			return new ResponseEntity<Object>(HttpStatus.NO_CONTENT);
+			return ResponseHandler.getResponse("There is no data.", HttpStatus.OK);
 		
-		return new ResponseEntity<Object>(new ResponseObject(roles), HttpStatus.OK);
+		return ResponseHandler.getResponse(roles, HttpStatus.OK);
 	}
 
 	@PostMapping("")
 	public ResponseEntity<Object> save(@Valid @RequestBody CreateRoleDTO dto, BindingResult errors) {
 		if(errors.hasErrors())
-			return new ResponseEntity<>(new ResponseObject(ErrorsUtils.getErrorsMessage(errors.getAllErrors())), HttpStatus.BAD_REQUEST);
+			return ResponseHandler.getResponse(errors, HttpStatus.BAD_REQUEST);
 		
-		Role role = new Role()
-				.roleName(dto.roleName)
-				.description(dto.description);	
-		Role addRole = _service.save(role);
-		return new ResponseEntity<>(new ResponseObject(addRole), HttpStatus.CREATED);
+		Role addRole = _service.save(dto);
+		
+		return ResponseHandler.getResponse(addRole, HttpStatus.OK);
 	}
 	
 	@PutMapping("/{role-id}")
 	public ResponseEntity<Object> updateRoleInfo(@Valid @RequestBody CreateRoleDTO dto, @PathVariable("role-id") Long roleId, BindingResult errors) {
 		
 		if(errors.hasErrors())
-			return new ResponseEntity<>(new ResponseObject(ErrorsUtils.getErrorsMessage(errors.getAllErrors())), HttpStatus.BAD_REQUEST);
+			return ResponseHandler.getResponse(errors, HttpStatus.BAD_REQUEST);
 		
 		Role updatedRole = _service.updateRoleInfo(dto, roleId);
 		
-		return new ResponseEntity<>(new ResponseObject(updatedRole), HttpStatus.OK);
+		return ResponseHandler.getResponse(updatedRole, HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/{role-id}")
 	public ResponseEntity<Object> deleteRole(@PathVariable("role-id") Long roleId) {
 		
 		if(roleId == null) 
-			return new ResponseEntity<>(new ResponseObject(ErrorsUtils.errorOf("Role id is null")) ,HttpStatus.BAD_REQUEST);
+			return ResponseHandler.getResponse("Role id must be provided.", HttpStatus.BAD_REQUEST);
 		
 		_service.deleteById(roleId);
 		
-		return new ResponseEntity<>(new ResponseObject("Role has been deleted") ,HttpStatus.OK);
+		return ResponseHandler.getResponse(HttpStatus.OK);
 	}
 	
 }
