@@ -1,4 +1,4 @@
-package cybersoft.javabackend.java11.gira.commondata.model;
+	package cybersoft.javabackend.java11.gira.commondata.model;
 
 import java.time.LocalDateTime;
 
@@ -18,7 +18,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import cybersoft.javabackend.java11.gira.utils.DateUtils;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public class AbstractEntity {
@@ -45,38 +49,6 @@ public class AbstractEntity {
 	public AbstractEntity() {
 		createdAt = LocalDateTime.now();
 		updatedAt = LocalDateTime.now();
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public int getVersion() {
-		return version;
-	}
-
-	public void setVersion(int version) {
-		this.version = version;
-	}
-
-	public LocalDateTime getCreatedAt() {
-		return createdAt;
-	}
-
-	public void setCreatedAt(LocalDateTime createdAt) {
-		this.createdAt = createdAt;
-	}
-
-	public LocalDateTime getUpdatedAt() {
-		return updatedAt;
-	}
-
-	public void setUpdatedAt(LocalDateTime updatedAt) {
-		this.updatedAt = updatedAt;
 	}
 	
 	

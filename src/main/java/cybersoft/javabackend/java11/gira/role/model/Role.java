@@ -16,9 +16,13 @@ import org.hibernate.validator.constraints.Length;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import cybersoft.javabackend.java11.gira.commondata.model.AbstractEntity;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "gira_role")
+@Getter
+@Setter
 public class Role extends AbstractEntity {
 	
 	@NotBlank(message = "Role name cannot be blank.")
@@ -35,12 +39,12 @@ public class Role extends AbstractEntity {
 	@JsonIgnore
 	private Set<RoleGroup> groups = new HashSet<>();
 	
+	/* Helper Method */
 	public Role id(Long id) {
 		this.id = id;
 		return this;
 	}
 	
-	/* Helper Method */
 	public Role addAccount(Account account) {
 		this.accounts.add(account);
 		return this;
@@ -54,47 +58,6 @@ public class Role extends AbstractEntity {
 	public Role description(String description) {
 		this.description = description;
 		return this;
-	}
-	
-	/* Getter - Setter */
-	public Set<RoleGroup> getGroups() {
-		return groups;
-	}
-
-	public void setGroups(Set<RoleGroup> groups) {
-		this.groups = groups;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-	
-	public String getRoleName() {
-		return roleName;
-	}
-
-	public void setRoleName(String roleName) {
-		this.roleName = roleName;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public Set<Account> getAccounts() {
-		return accounts;
-	}
-
-	public void setAccounts(Set<Account> accounts) {
-		this.accounts = accounts;
 	}
 
 	@Override

@@ -14,9 +14,14 @@ import javax.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
 
 import cybersoft.javabackend.java11.gira.commondata.model.AbstractEntity;
+import cybersoft.javabackend.java11.gira.user.model.User;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "gira_role_group")
+@Getter
+@Setter
 public class RoleGroup extends AbstractEntity {
 
 	@NotBlank(message = "Role name cannot be blank.")
@@ -33,10 +38,17 @@ public class RoleGroup extends AbstractEntity {
 	 *  - tao bang join table o doi tuong chinh
 	 */
 	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-	@JoinTable(name = "group_role_link",
+	@JoinTable(name = "gira_group_role_link",
 				joinColumns = @JoinColumn(name = "group_id"),
 				inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
+	
+	
+	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+	@JoinTable(name = "gira_user_role_group",
+				joinColumns = @JoinColumn(name = "role_group_id"),
+				inverseJoinColumns = @JoinColumn(name = "user_id"))
+	private Set<User> users = new HashSet<>();
 	
 	/*
 	 * Helper methods 
@@ -57,31 +69,6 @@ public class RoleGroup extends AbstractEntity {
 	public RoleGroup description(String description) {
 		this.description = description;
 		return this;
-	}
-
-	/* Getters - Setters */
-	public String getGroupName() {
-		return groupName;
-	}
-
-	public void setGroupName(String groupName) {
-		this.groupName = groupName;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public Set<Role> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
 	}
 	
 	
