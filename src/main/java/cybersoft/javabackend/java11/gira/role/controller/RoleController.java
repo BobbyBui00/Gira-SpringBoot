@@ -55,8 +55,7 @@ public class RoleController {
 	
 	@GetMapping("/description/{role-name}")
 	public ResponseEntity<Object> findRoleWithoutBlankDescription(@PathVariable("role-name") String roleName) {
-		List<Role> roles = _service.findRoleWithNotNullDescription(roleName);
-		
+		List<Role> roles = _service.findRoleWithoutBlankDescription(roleName);
 		if(roles.isEmpty())
 			return ResponseHandler.getResponse("There is no data.", HttpStatus.OK);
 		
