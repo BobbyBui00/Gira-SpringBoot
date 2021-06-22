@@ -11,7 +11,7 @@ import javax.validation.Payload;
 import cybersoft.javabackend.java11.gira.user.validation.validator.UniqueUsernameValidator;
 
 @Constraint(validatedBy = UniqueUsernameValidator.class)
-@Target(ElementType.FIELD)
+@Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)	
 public @interface UniqueUsername {
 	
