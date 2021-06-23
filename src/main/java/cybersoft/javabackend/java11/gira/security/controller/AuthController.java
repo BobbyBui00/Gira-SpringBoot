@@ -16,13 +16,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import cybersoft.javabackend.java11.gira.commondata.model.ResponseHandler;
-import cybersoft.javabackend.java11.gira.security.dto.LoginDTO;
 import cybersoft.javabackend.java11.gira.security.dto.JwtDTO;
+import cybersoft.javabackend.java11.gira.security.dto.LoginDTO;
 import cybersoft.javabackend.java11.gira.security.jwt.JwtUtils;
 
 @RestController
 public class AuthController {
-	
 	@Autowired
 	private AuthenticationManager authenticationManager;
 	

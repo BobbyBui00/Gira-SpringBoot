@@ -20,38 +20,32 @@ import cybersoft.javabackend.java11.gira.user.repository.UserRepository;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-	
 	@Autowired
 	private UserRepository repository;
-
+	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		// TODO: doc thong tin user va roleGroup tu database len
-		// Load user tu database
+		// TODO: đọc thông tin user và role group từ database
+		// load user từ database
 		Optional<User> user = repository.findByUsername(username);
 		
 		if(!user.isPresent())
-			throw new UsernameNotFoundException("Username is invalid");
+			throw new UsernameNotFoundException("Username is invalid.");
 		
-		Set<GrantedAuthority> authorities = getAuthorities(user.get().getRoleGroup());
+		Set<GrantedAuthority> authorities = getAuthorities(user.get().getRoleGroups());
 		
 		return new UserDetailsDTO(user.get().getUsername(), user.get().getPassword(), authorities);
 	}
 
-	private Set<GrantedAuthority> getAuthorities(Set<RoleGroup> roleGroup) {
-		// TODO Auto-generated method stub
+	private Set<GrantedAuthority> getAuthorities(Set<RoleGroup> roleGroups) {
 		Set<GrantedAuthority> authorities = new HashSet<>();
 		
-		Iterator<RoleGroup> iterator = roleGroup.iterator();
+		Iterator<RoleGroup> iterator = roleGroups.iterator();
 		
-		while(iterator.hasNext()) {
-			SimpleGrantedAuthority authority = new SimpleGrantedAuthority(iterator.next().getGroupName());
-			authorities.add(authority);
+		while(iterator.hasNext()) 
+			authorities.add(new SimpleGrantedAuthority(iterator.next().getGroupName()));
 			
-			// authorities.add(new SimpleGrantedAuthority(iterator.next().getGroupName());
-		}
-		
-		return null;
+		return authorities;
 	}
 
 }
