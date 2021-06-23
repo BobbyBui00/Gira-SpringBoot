@@ -12,5 +12,7 @@ public interface UserService extends GenericService<User, Long>{
 	User save(@Valid CreateUserDTO dto);
 
 	boolean isTakenUsername(String username);
+	
+	boolean isTakenEmail(String email);
 		
 }

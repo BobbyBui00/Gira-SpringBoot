@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
@@ -26,19 +27,14 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "gira_user")
-public class User extends AbstractEntity {
-	
-	@NotBlank(message = "{user.username.notblank}")
-	@Size(min = 3, max = 20, message = "{user.username.size}")
+public class User extends AbstractEntity{
+	@NotBlank(message = "{user.username.not-blank}")
+	@Size(min = 3, max = 50, message = "{user.username.size}")
 	@Column(unique = true)
 	private String username;
 	
 	@NotBlank
-	@Size(min = 3, max = 20, message = "{user.password.size}")
 	private String password;
-	
-	@NotBlank
-	private String confirmPassword;
 	
 	@NotBlank
 	@Email
@@ -51,22 +47,21 @@ public class User extends AbstractEntity {
 	@NotBlank
 	private String displayName;
 	
-	private String avatar;
-	
 	@NotNull
 	@Enumerated(EnumType.STRING)
 	private UserStatus status;
+	
+	private String avatar;
 	
 	private String facebookUrl;
 	private String job;
 	private String department;
 	private String hobbies;
 	
-	@ManyToMany(mappedBy = "users")
+	@ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
 	@JsonIgnore
-	private Set<RoleGroup> roleGroup = new HashSet<>();	
+	private Set<RoleGroup> roleGroups = new HashSet<>();
 	
-	/* Helper Methods */
 	public User username(String username) {
 		this.username = username;
 		return this;
@@ -96,5 +91,4 @@ public class User extends AbstractEntity {
 		this.status = status;
 		return this;
 	}
-	
 }
