@@ -12,12 +12,11 @@ import cybersoft.javabackend.java11.gira.user.validation.validator.UniqueUsernam
 
 @Constraint(validatedBy = UniqueUsernameValidator.class)
 @Target({ElementType.FIELD})
-@Retention(RetentionPolicy.RUNTIME)	
+@Retention(RetentionPolicy.RUNTIME)
 public @interface UniqueUsername {
-	
-	public String message() default "Username is already exist.";
+	public String message() default "Username is already used.";
 	
 	public Class<?>[] groups() default {};
 	
-	public Class<? extends Payload>[] payload() default {}; 
+	public Class<? extends Payload>[] payload() default {};
 }
