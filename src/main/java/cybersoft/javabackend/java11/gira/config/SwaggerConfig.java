@@ -24,8 +24,8 @@ public class SwaggerConfig {
 	@Bean
 	public Docket api() {
 		return new Docket(DocumentationType.SWAGGER_2)
-				.securityContexts(Arrays.asList(securityContext()))
-				.securitySchemes(Arrays.asList(apiKey()))
+				.securityContexts(Arrays.asList(securityContext())) // to read the jwt key
+				.securitySchemes(Arrays.asList(apiKey())) // to create Authorization button
 				.select()
 				.apis(RequestHandlerSelectors.basePackage("cybersoft.javabackend.java11.gira"))
 				.build()
@@ -47,11 +47,11 @@ public class SwaggerConfig {
 	
 	private SecurityContext securityContext() {
 		return SecurityContext.builder()
-								.securityReferences(securityReference())
+								.securityReferences(securityReferences())
 								.build();
 	}
 	
-	private List<SecurityReference> securityReference() {
+	private List<SecurityReference> securityReferences() {
 		AuthorizationScope authorizationScope = new AuthorizationScope("global", "All application can access");
 		AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
 		authorizationScopes[0] = authorizationScope;
