@@ -5,24 +5,21 @@ import java.lang.reflect.Method;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class MapDtoToModel<E extends Object, T extends Object> {
-	
+
 	public T map(E dto, T model) {
 		
 		Method[] dtoMethods = dto.getClass().getMethods();
 		List<String> dtoGetters = new LinkedList<String>();
-		List<String> modelSetters = new LinkedList<String>();
 		
 		// extract all getters from dto methods
 		for (Method method : dtoMethods) {
 			if(!method.getName().equals("getClass") && method.getName().startsWith("get")) {
 				dtoGetters.add(method.getName());
 			}
-		}
-		
-		// parse dto getters to model setters
-		for (String getter : dtoGetters) {
-			modelSetters.add(getter.replaceFirst("get", "set"));
 		}
 		
 		// map dto properties to model properties
@@ -36,12 +33,17 @@ public class MapDtoToModel<E extends Object, T extends Object> {
 				String modelSetter = getter.replaceFirst("get", "set");
 				
 				// get properties value
-				Class<?>[] classes = model.getClass().getMethod(modelSetter).getParameterTypes();
+				Class<?> propertyType = model.getClass().getMethod(modelSetter, dtoValue.getClass()).getParameterTypes()[0];
+				
+				// call model's setter to set dtoValue to model 
+				model.getClass().getMethod(modelSetter, propertyType).invoke(model, propertyType.cast(dtoValue));
 				
 			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
 					| NoSuchMethodException | SecurityException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			} catch (NullPointerException ex) {
+				ex.printStackTrace();
 			}
 			
 		}

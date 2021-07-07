@@ -12,7 +12,20 @@ spring:
     show-sql: true
     generate-ddl: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+      
+logging:
+  level:
+    root: info
+    org.springframework: debug
+    '[cybersoft.javabackend.java11.gira]': debug
+  pattern:
+    
+    dateformat: 
+  
       
 gira:    
    app:

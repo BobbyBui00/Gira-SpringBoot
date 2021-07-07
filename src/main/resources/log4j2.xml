@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+  <Appenders>
+    <Console name="Console" target="SYSTEM_OUT">
+      <PatternLayout pattern="%d{HH:mm:ss} [%t] %-5level %c{1.} - %msg%n"/>
+    </Console>
+    <RollingFile name="RollingFile" fileName="./logs/gira-app-log.log"
+    	filePattern="./logs/$${date:yyyy-MM}/gira-app-%d{yyyy-MM-dd}-%i.log">
+    	
+    	<PatternLayout pattern="%d{HH:mm:ss} [%t] %-5level %clr(${PID:- }) %c{1.} - %msg%n"/>
+    	<Policies>
+    		<OnStartupTriggeringPolicy />
+    		<SizeBasedTriggeringPolicy size="20MB"/>
+    	</Policies>
+    </RollingFile>
+  </Appenders>
+  <Loggers>
+    <Root level="error">
+      <AppenderRef ref="Console"/>
+    </Root>
+    <Logger name="org.springframework" level="debug" ></Logger>
+	<Logger name="cybersoft.javabackend.java11.gira" level="debug" ></Logger>
+  </Loggers>
+</Configuration>
