@@ -13,6 +13,8 @@ import javax.validation.constraints.NotBlank;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import cybersoft.javabackend.java11.gira.commondata.model.AbstractEntity;
 import cybersoft.javabackend.java11.gira.user.model.User;
 import lombok.Getter;
@@ -48,6 +50,7 @@ public class RoleGroup extends AbstractEntity {
 	@JoinTable(name = "gira_user_role_group",
 				joinColumns = @JoinColumn(name = "role_group_id"),
 				inverseJoinColumns = @JoinColumn(name = "user_id"))
+	@JsonIgnore
 	private Set<User> users = new HashSet<>();
 	
 	/*

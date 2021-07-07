@@ -20,6 +20,7 @@ import cybersoft.javabackend.java11.gira.role.dto.CreateRoleGroupDTO;
 import cybersoft.javabackend.java11.gira.role.model.Role;
 import cybersoft.javabackend.java11.gira.role.model.RoleGroup;
 import cybersoft.javabackend.java11.gira.role.service.RoleGroupService;
+import cybersoft.javabackend.java11.gira.user.model.User;
 
 @RestController
 @RequestMapping("/api/role-group")
@@ -30,6 +31,24 @@ public class RoleGroupController {
 	@GetMapping("")
 	public ResponseEntity<Object> findAllGroups(){
 		List<RoleGroup> groups = service.findAll();
+		
+		if(groups.isEmpty())
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		return new ResponseEntity<>(groups, HttpStatus.OK);
+	}
+	
+	@GetMapping("/users")
+	public ResponseEntity<Object> findAllGroupsWithUsers(){
+		List<RoleGroup> groups = service.findAllWithUsers();
+		
+		if(groups.isEmpty())
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		return new ResponseEntity<>(groups, HttpStatus.OK);
+	}
+	
+	@GetMapping("/roles")
+	public ResponseEntity<Object> findAllGroupsWithRoles(){
+		List<RoleGroup> groups = service.findAllWithRoles();
 		
 		if(groups.isEmpty())
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -61,4 +80,14 @@ public class RoleGroupController {
 		
 		return new ResponseEntity<>(updatedGroup, HttpStatus.OK);
 	}
+	
+	@PutMapping("/{group-id}/{username}")
+	public ResponseEntity<Object> addUserToGroup(@PathVariable("username") String username, @PathVariable("group-id") Long id){
+		
+		RoleGroup updatedGroup = service.addUser(username, id);
+		
+		return new ResponseEntity<>(updatedGroup, HttpStatus.OK);
+	}
+	
+	
 }

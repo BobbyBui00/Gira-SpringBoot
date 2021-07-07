@@ -11,11 +11,16 @@ import org.springframework.stereotype.Service;
 import cybersoft.javabackend.java11.gira.role.model.Role;
 import cybersoft.javabackend.java11.gira.role.model.RoleGroup;
 import cybersoft.javabackend.java11.gira.role.repository.RoleGroupRepository;
+import cybersoft.javabackend.java11.gira.user.model.User;
+import cybersoft.javabackend.java11.gira.user.repository.UserRepository;
+import lombok.AllArgsConstructor;
 
 @Service
+@AllArgsConstructor
 public class RoleGroupServiceImpl implements RoleGroupService {
-	@Autowired
+
 	private RoleGroupRepository repository;
+	private UserRepository userRepository;
 	
 	@Override
 	public List<RoleGroup> findAll() {
@@ -57,6 +62,33 @@ public class RoleGroupServiceImpl implements RoleGroupService {
 		
 		group.addRole(role);
 		
+		return repository.save(group);
+	}
+
+	@Override
+	public List<RoleGroup> findAllWithUsers() {
+		// TODO Auto-generated method stub
+		return repository.findAllWithUsers();
+	}
+
+	@Override
+	public List<RoleGroup> findAllWithRoles() {
+		// TODO Auto-generated method stub
+		return repository.findAllWithRoles();
+	}
+
+	@Override
+	public RoleGroup addUser(String username, Long id) {
+		// TODO Auto-generated method stub
+		RoleGroup group = repository.getOne(id);
+		Optional<User> userOpt = userRepository.findByUsername(username);
+		
+		if(userOpt.isPresent()) {
+			group.getUsers().add(userOpt.get());
+			userOpt.get().getRoleGroups().add(group);
+		}
+			
+			
 		return repository.save(group);
 	}
 
