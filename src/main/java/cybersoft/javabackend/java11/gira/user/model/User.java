@@ -62,8 +62,12 @@ public class User extends AbstractEntity{
 	private String department;
 	private String hobbies;
 	
+	/*
+	 * Doi voi quan he @ManyToMany, fetchType mac dinh la LAZY
+	 */
+	
 	@ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
-	@JsonIgnore
+//	@JsonIgnore
 	private Set<RoleGroup> roleGroups = new HashSet<>();
 	
 	@OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
@@ -71,6 +75,7 @@ public class User extends AbstractEntity{
 	private Set<Project> ownProjects = new HashSet<>();
 	
 	@OneToMany(mappedBy = "manager", cascade = CascadeType.ALL)
+	@JsonIgnore
 	private Set<Project> manageProjects = new HashSet<>();
 	
 	/* Helper methods */
